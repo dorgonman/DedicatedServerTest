@@ -55,11 +55,13 @@ echo "-----------------------------------------------------"
 
 BASE_PATH=$(cd "$(dirname "$0")"; pwd)
 PROJECT_ROOT=$(cd "${BASE_PATH}/../../../../"; pwd)
-PROJECT_FILE="${PROJECT_ROOT}/DedicatedServerTest.uproject"
+pushd ${PROJECT_ROOT}
 
-ARCHIVE_DIR="${PROJECT_ROOT}/ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"
+
+PROJECT_FILE="${PROJECT_ROOT}/DedicatedServerTest.uproject"
+ARCHIVE_DIR="${PROJECT_ROOT}/../DedicatedServerTest_ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"
 mkdir -p ${ARCHIVE_DIR}
-ARCHIVE_DIR=$(cd "${PROJECT_ROOT}/ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"; pwd)
+ARCHIVE_DIR=$(cd "${ARCHIVE_DIR}"; pwd)
 
 echo {PROJECT_ROOT}: ${PROJECT_ROOT}
 echo {ARCHIVE_DIR}: ${ARCHIVE_DIR}
@@ -67,12 +69,13 @@ echo {BUILD_CONFIG}: ${BUILD_CONFIG}
 echo {PLATFORM}: 	${PLATFORM}
 echo {PROJECT_FILE}: ${PROJECT_FILE}
 
-pushd ${PROJECT_ROOT}
 ./git_clean.sh
-python ${PROJECT_ROOT}/ci_scripts/function/python/HorizonBuildTool/HorizonBuildTool/Source/HorizonUE4Build/Main.py \
+python -u ${PROJECT_ROOT}/ci_scripts/function/python/HorizonBuildTool/HorizonBuildTool/Source/HorizonUE4Build/Main.py \
 	 --engine "${UE4_ENGINE_ROOT}" \
 	 --project "${PROJECT_FILE}" \
 	 --build_platform ${PLATFORM} \
 	 --build_config ${BUILD_CONFIG} \
 	 --archive "${ARCHIVE_DIR}"
-popd
+
+
+popd #pushd ${PROJECT_ROOT}
