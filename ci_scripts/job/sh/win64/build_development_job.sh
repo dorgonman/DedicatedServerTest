@@ -28,10 +28,20 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 LICENSE
+UE4_ENGINE_ROOT=${1}
 
+if  [ "${UE4_ENGINE_ROOT}" = "" ]
+then
+	echo "UE4_ENGINE_ROOT not Exists"
+   	#UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
+   	UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
 
-UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
-#UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
+else
+   echo "ENV UE4_ENGINE_ROOT Exists"
+fi
+
+echo "Current UE4_ENGINE_ROOT:${UE4_ENGINE_ROOT}"
+
 GIT_BRANCH=$(git symbolic-ref --short HEAD)
 GIT_REV_COUNT=$(git rev-list HEAD --count)
 BUILD_CONFIG="Development"
@@ -57,10 +67,12 @@ echo {BUILD_CONFIG}: ${BUILD_CONFIG}
 echo {PLATFORM}: 	${PLATFORM}
 echo {PROJECT_FILE}: ${PROJECT_FILE}
 
-python --version
+pushd ${PROJECT_ROOT}
+./git_clean.sh
 python ${PROJECT_ROOT}/ci_scripts/function/python/HorizonBuildTool/HorizonBuildTool/Source/HorizonUE4Build/Main.py \
 	 --engine "${UE4_ENGINE_ROOT}" \
 	 --project "${PROJECT_FILE}" \
 	 --build_platform ${PLATFORM} \
 	 --build_config ${BUILD_CONFIG} \
 	 --archive "${ARCHIVE_DIR}"
+popd
