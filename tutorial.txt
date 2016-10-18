@@ -1,1 +1,19 @@
 https://wiki.unrealengine.com/Dedicated_Server_Guide_(Windows_%26_Linux)
+
+
+1. cd ${PROJECT_ROOT}/ci_scripts/job/sh/win64
+   execute build script:
+   build_server_development_job.sh(can only build from source)
+   build_client_development_job.sh
+
+
+2. open server under"${PROJECT_ROOT}/../DedicatedServerTest_ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/":
+
+ DedicatedServerTestServer.exe -log
+
+
+ 3. Open up the client binary you built in "${PROJECT_ROOT}/../DedicatedServerTest_ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"
+
+Enter the console (press “~”) and run:
+
+`open 127.0.0.1:7777`
