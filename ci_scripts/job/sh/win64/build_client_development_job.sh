@@ -71,7 +71,7 @@ echo {PROJECT_FILE}: ${PROJECT_FILE}
 
 ./git_clean.sh
 python -u ${PROJECT_ROOT}/ci_scripts/function/python/HorizonBuildTool/HorizonBuildTool/Source/HorizonUE4Build/Main.py \
- 	 --buildserver  \
+ 	 --buildclient  \
 	 --engine "${UE4_ENGINE_ROOT}" \
 	 --project "${PROJECT_FILE}" \
 	 --build_platform ${PLATFORM} \

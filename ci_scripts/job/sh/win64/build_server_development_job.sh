@@ -33,8 +33,8 @@ UE4_ENGINE_ROOT=${1}
 if  [ "${UE4_ENGINE_ROOT}" = "" ]
 then
 	echo "UE4_ENGINE_ROOT not Exists"
-   	#UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
-   	UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
+   	UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
+   	#UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
 
 else
    echo "ENV UE4_ENGINE_ROOT Exists"
