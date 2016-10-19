@@ -28,13 +28,19 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 LICENSE
-UE4_ENGINE_ROOT=${1}
+
+
+if ! [[ -v UE4_ENGINE_ROOT ]]
+then 
+	UE4_ENGINE_ROOT=${1} 
+	echo "ENV['UE4_ENGINE_ROOT'] not set, try using {1}"
+fi
 
 if  [ "${UE4_ENGINE_ROOT}" = "" ]
 then
 	echo "UE4_ENGINE_ROOT not Exists"
-	#UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
-   	UE4_ENGINE_ROOT="/c/Program Files (x86)/Epic Games/UnrealEngine"
+	UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
+   	#UE4_ENGINE_ROOT="/c/Program Files (x86)/Epic Games/UnrealEngine"
    	#UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
 
 else
