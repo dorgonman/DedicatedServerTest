@@ -48,7 +48,7 @@ BUILD_CONFIG="Development"
 PLATFORM="Win64"
 
 echo "-----------------------------------------------------"
-echo "start win64 build - branch=${GIT_BRANCH}, revision=${GIT_REV_COUNT}, CONFIG=${BUILD_CONFIG}"
+echo "start ${PLATFORM} build - branch=${GIT_BRANCH}, revision=${GIT_REV_COUNT}, CONFIG=${BUILD_CONFIG}"
 echo "-----------------------------------------------------"
 
 
