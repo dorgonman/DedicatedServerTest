@@ -29,7 +29,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 LICENSE
 
-if ! [[ -v UE4_ENGINE_ROOT ]]
+if ! [ [ "${UE4_ENGINE_ROOT:+isset}" == "isset" ] ]
 then 
 	UE4_ENGINE_ROOT=${1} 
 	echo "ENV['UE4_ENGINE_ROOT'] not set, try using {1}"
