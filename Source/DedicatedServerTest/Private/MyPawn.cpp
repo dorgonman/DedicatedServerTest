@@ -82,8 +82,10 @@ void AMyPawn::AddMovementInput(FVector WorldDirection, float ScaleValue, bool bF
 	else {
 		//run on server
 		Super::AddMovementInput(WorldDirection, ScaleValue, bForce);
+		SetActorRotation(WorldDirection.Rotation());
 		CurrentTransform = GetActorTransform();
-
+		//CurrentTransform.SetRotation(WorldDirection.ToOrientationQuat());
+		
 	}
 
 
