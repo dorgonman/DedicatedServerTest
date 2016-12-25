@@ -16,3 +16,10 @@ void UMyBlueprintFunctionLibrary::AddOnScreenDebugMessage(const char* format, ..
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan,
 		FString("LOG: ") + buf);
 }
+
+
+
+FRotator UMyBlueprintFunctionLibrary::GetCameraDirection(APlayerController* PC)
+{
+	return PC->PlayerCameraManager->GetCameraRotation();
+}

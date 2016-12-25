@@ -49,15 +49,18 @@ void AMyPawn::BeginPlay()
 void AMyPawn::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
-	//this->SetActorLocation(ReplicatedMovement.Location);
-	//CharacterMovement->TickComponent(DeltaTime);
+
+	//send Client camera rotation to server for replicate pawn's rotation
+	//CurrentTransform = GetActorTransform();
 }
 
 // Called to bind functionality to input
 void AMyPawn::SetupPlayerInputComponent(class UInputComponent* inputComponent)
 {
 	Super::SetupPlayerInputComponent(inputComponent);
-
+	//inputComponent->BindAxis("MoveForward", this, &AMyPawn::MoveForward);
+	//inputComponent->BindAxis("Turn", this, &AMyPawn::AddControllerYawInput);
+	//inputComponent->BindAxis("LookUp", this, &AMyPawn::AddControllerPitchInput);
 }
 
 
@@ -67,26 +70,26 @@ void AMyPawn::AddMovementInput(FVector WorldDirection, float ScaleValue, bool bF
 	if (!Controller || ScaleValue == 0.0f) return;
 	//Super::AddMovementInput(WorldDirection, ScaleValue, bForce);
 	// Make sure only the Client Version calls the ServerRPC
-
-	//if (Role == ROLE_Authority) {
-	//
-	//}
-	//else {
-	//
-	//	Super::AddMovementInput(WorldDirection, ScaleValue, bForce);
-	//}
-	//Super::AddMovementInput(WorldDirection, ScaleValue, bForce);
+	//bool AActor::HasAuthority() const { return (Role == ROLE_Authority); }
 	if (Role < ROLE_Authority && IsLocallyControlled()) {
+		//run on client, call PRC to server
 		Server_AddMovementInput(WorldDirection, ScaleValue, bForce);
 	}
 	else {
 		//run on server
 		Super::AddMovementInput(WorldDirection, ScaleValue, bForce);
 		SetActorRotation(WorldDirection.Rotation());
+		//will call OnRep_TransformChange
 		CurrentTransform = GetActorTransform();
 		//CurrentTransform.SetRotation(WorldDirection.ToOrientationQuat());
 		
 	}
+
+
+	//if (GEngine->GetNetMode(GetWorld()) != NM_DedicatedServer)
+	//{
+		//code to run on non-dedicated servers
+	//}
 
 
 
@@ -118,8 +121,22 @@ UPawnMovementComponent* AMyPawn::GetMovementComponent() const
 void AMyPawn::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
+	///** Secondary condition to check before considering the replication of a lifetime property. */
+	//enum ELifetimeCondition
+	//{
+	//	COND_None = 0,		// This property has no condition, and will send anytime it changes
+	//	COND_InitialOnly = 1,		// This property will only attempt to send on the initial bunch
+	//	COND_OwnerOnly = 2,		// This property will only send to the actor's owner
+	//	COND_SkipOwner = 3,		// This property send to every connection EXCEPT the owner
+	//	COND_SimulatedOnly = 4,		// This property will only send to simulated actors
+	//	COND_AutonomousOnly = 5,		// This property will only send to autonomous actors
+	//	COND_SimulatedOrPhysics = 6,		// This property will send to simulated OR bRepPhysics actors
+	//	COND_InitialOrOwner = 7,		// This property will send on the initial packet, or to the actors owner
+	//	COND_Custom = 8,		// This property has no particular condition, but wants the ability to toggle on/off via SetCustomIsActiveOverride
+	//	COND_Max = 9,
+	//};
 	DOREPLIFETIME(AMyPawn, CurrentTransform);
+	//DOREPLIFETIME_CONDITION( AMyPawn, CurrentTransform, COND_None );
 }
 
 void AMyPawn::OnRep_ReplicatedMovement()

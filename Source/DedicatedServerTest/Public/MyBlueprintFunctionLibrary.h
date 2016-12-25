@@ -16,5 +16,6 @@ class DEDICATEDSERVERTEST_API UMyBlueprintFunctionLibrary : public UBlueprintFun
 public:
 	static void AddOnScreenDebugMessage(const char* format, ...);
 	
+	static FRotator GetCameraDirection(APlayerController* PC);
 	
 };
