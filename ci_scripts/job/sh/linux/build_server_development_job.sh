@@ -74,12 +74,12 @@ EXT=$(python ./ci_scripts/function/python/get_shell_ext.py)
 
 
 CMD=" \
- '${UE4_ENGINE_ROOT}/Engine/Build/BatchFiles/RunUAT.${EXT}' -ScriptsForProject='${PROJECT_FILE}' BuildCookRun \
- -NoCompileEditor -NoP4  -Verbose -UTF8Output -NoCompile -CrashReporter\
- -project='${PROJECT_FILE}' \
- -noP4 -platform={BUILD_PLATFORM} \
- -serverconfig={BUILD_CONFIG} -server -serverplatform={BUILD_PLATFORM} -noclient -NoCompile -stage \
- -pak -archive -archivedirectory={ARCHIVE_DIR} \
+ '${UNREAL_ENGINE_ROOT}/Engine/Build/BatchFiles/RunUAT.${EXT}' BuildCookRun \
+-nocompileeditor -nop4  \
+-project=${PROJECT_FILE} -cook -stage -archive -archivedirectory=${ARCHIVE_DIR} \
+-package -server -serverconfig=${BUILD_CONFIG} -noclient \
+-SKIPEDITORCONTENT -pak -prereqs -nodebuginfo -platform=${BUILD_PLATFORM} \
+-build -CrashReporter -utf8output -compile
  "
 # -nocompile 
  #UAT flag, if we want to compile Source\Programs\AutomationTool
