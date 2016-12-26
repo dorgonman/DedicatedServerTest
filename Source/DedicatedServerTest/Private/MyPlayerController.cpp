@@ -48,10 +48,14 @@ void AMyPlayerController::OnFindSessionsComplete(bool bSuccess)
 	int numSessions = SessionInt->GetNumSessions();
 	UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), numSessions);
 	if (SearchSettings->SearchResults.Num() > 0) {
-		FOnlineSessionSearchResult result;
-		result.Session = SearchSettings->SearchResults[0].Session;
+		//FOnlineSessionSearchResult result;
+		//result.Session = SearchSettings->SearchResults[0].Session;
 		//SearchSettings->SearchResults[0].GetSessionIdStr();
-		SessionInt->JoinSession(0, "Game", result);
+		//FOnlineSubsystemBPCallHelper Helper(TEXT("JoinSession"), GEngine->GetWorldFromContextObject(WorldContextObject));
+		//Helper.QueryIDFromPlayerController(PlayerControllerWeakPtr.Get());
+			//Sessions->JoinSession(*Helper.UserID, GameSessionName, OnlineSearchResult);
+
+		SessionInt->JoinSession(0, GameSessionName, SearchSettings->SearchResults[0]);
 	}
 }
 
@@ -59,4 +63,10 @@ void AMyPlayerController::OnJoinSessionsComplete(FName sessionName,
 	EOnJoinSessionCompleteResult::Type eSessionType)
 {
 	UE_LOG(LogTemp, Log, TEXT("OnJoinSessionsComplete: %s, result: %d"), *FString(sessionName.ToString()), (int)eSessionType);
+	//IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
+	//SessionInt->JoinSession(0, GameSessionName, SearchSettings->SearchResults[0]);
+	IOnlineVoicePtr VoiceInterface = Online::GetVoiceInterface();
+	VoiceInterface->RegisterLocalTalker(0);
+	VoiceInterface->StopNetworkedVoice(0);
+	VoiceInterface->StartNetworkedVoice(0);
 }

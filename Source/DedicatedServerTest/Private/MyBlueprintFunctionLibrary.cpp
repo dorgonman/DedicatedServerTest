@@ -11,7 +11,7 @@ void UMyBlueprintFunctionLibrary::AddOnScreenDebugMessage(const char* format, ..
 	char buf[1024];
 	va_list argptr;
 	va_start(argptr, format);
-	vsprintf_s(buf, format, argptr);
+	vsprintf(buf, format, argptr);
 	va_end(argptr);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan,
 		FString("LOG: ") + buf);
