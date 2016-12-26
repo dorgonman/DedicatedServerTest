@@ -74,7 +74,7 @@ EXT=$(python ./ci_scripts/function/python/get_shell_ext.py)
 
 
 CMD=" \
- '${UNREAL_ENGINE_ROOT}/Engine/Build/BatchFiles/RunUAT.${EXT}' BuildCookRun \
+ '${UE4_ENGINE_ROOT}/Engine/Build/BatchFiles/RunUAT.${EXT}' BuildCookRun \
 -nocompileeditor -nop4  \
 -project=${PROJECT_FILE} -cook -stage -archive -archivedirectory=${ARCHIVE_DIR} \
 -package -server -serverconfig=${BUILD_CONFIG} -noclient \
