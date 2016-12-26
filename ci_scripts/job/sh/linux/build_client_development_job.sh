@@ -28,20 +28,12 @@ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 LICENSE
-
-
-if ! [[ -v UE4_ENGINE_ROOT ]]
-then 
-	UE4_ENGINE_ROOT=${1} 
-	echo "ENV['UE4_ENGINE_ROOT'] not set, try using {1}"
-fi
-
+source ~/.bash_profile
 if  [ "${UE4_ENGINE_ROOT}" = "" ]
 then
 	echo "UE4_ENGINE_ROOT not Exists"
-	UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
-   	#UE4_ENGINE_ROOT="/c/Program Files (x86)/Epic Games/UnrealEngine"
-   	#UE4_ENGINE_ROOT="/d/UnrealEngine/Epic Games/4.13/"
+   	#UE4_ENGINE_ROOT=/d/UnrealEngine/UnrealEngineGit/
+   	UE4_ENGINE_ROOT=${1}
 
 else
    echo "ENV UE4_ENGINE_ROOT Exists"
@@ -52,10 +44,10 @@ echo "Current UE4_ENGINE_ROOT:${UE4_ENGINE_ROOT}"
 GIT_BRANCH=$(git symbolic-ref --short HEAD)
 GIT_REV_COUNT=$(git rev-list HEAD --count)
 BUILD_CONFIG="Development"
-PLATFORM="Linux"
-
+BUILD_PLATFORM="Linux"
+PROJECT_NAME=DedicatedServerTest
 echo "-----------------------------------------------------"
-echo "start ${PLATFORM} build - branch=${GIT_BRANCH}, revision=${GIT_REV_COUNT}, CONFIG=${BUILD_CONFIG}"
+echo "start ${BUILD_PLATFORM} build - branch=${GIT_BRANCH}, revision=${GIT_REV_COUNT}, CONFIG=${BUILD_CONFIG}"
 echo "-----------------------------------------------------"
 
 
@@ -65,25 +57,41 @@ PROJECT_ROOT=$(cd "${BASE_PATH}/../../../../"; pwd)
 pushd ${PROJECT_ROOT}
 
 
-PROJECT_FILE="${PROJECT_ROOT}/DedicatedServerTest.uproject"
-ARCHIVE_DIR="${PROJECT_ROOT}/../DedicatedServerTest_ci_build/${PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"
+PROJECT_FILE="${PROJECT_ROOT}/${PROJECT_NAME}.uproject"
+ARCHIVE_DIR="${PROJECT_ROOT}/../${PROJECT_NAME}_ci_build/${BUILD_PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/"
 mkdir -p ${ARCHIVE_DIR}
 ARCHIVE_DIR=$(cd "${ARCHIVE_DIR}"; pwd)
 
-echo {PROJECT_ROOT}: ${PROJECT_ROOT}
-echo {ARCHIVE_DIR}: ${ARCHIVE_DIR}
-echo {BUILD_CONFIG}: ${BUILD_CONFIG}
-echo {PLATFORM}: 	${PLATFORM}
-echo {PROJECT_FILE}: ${PROJECT_FILE}
+EXT=$(python ./ci_scripts/function/python/get_shell_ext.py)
 
-#./git_clean.sh
-python -u ${PROJECT_ROOT}/ci_scripts/function/python/HorizonBuildTool/HorizonBuildTool/Source/HorizonUE4Build/Main.py \
- 	 --buildclient  \
-	 --engine "${UE4_ENGINE_ROOT}" \
-	 --project "${PROJECT_FILE}" \
-	 --build_platform ${PLATFORM} \
-	 --build_config ${BUILD_CONFIG} \
-	 --archive "${ARCHIVE_DIR}" --crosscompile
 
+
+
+"${UE4_ENGINE_ROOT}/Engine/Binaries/DotNET/UnrealBuildTool.exe"  \
+ ${PROJECT_NAME} Win64 Development \
+ -project="${PROJECT_FILE}"      \
+ -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2015
+
+
+CMD=" \
+ '${UE4_ENGINE_ROOT}/Engine/Build/BatchFiles/RunUAT.${EXT}' -ScriptsForProject='${PROJECT_FILE}' BuildCookRun \
+ -NoCompileEditor -NoP4  -Verbose -UTF8Output -NoCompile -CrashReporter\
+ -project='${PROJECT_FILE}' \
+ -cook -allmaps -unversionedcookedcontent -pak -compressed -stage -archive -archivedirectory='${ARCHIVE_DIR}'     \
+ -package  -clientconfig=${BUILD_CONFIG} \
+ -SKIPEDITORCONTENT -pak -prereqs -nodebuginfo -targetplatform=${BUILD_PLATFORM}        \
+ -build  -createreleaseversion=${BUILD_PLATFORM} \
+ "
+# -nocompile 
+ #UAT flag, if we want to compile Source\Programs\AutomationTool
+
+eval ${CMD}
+
+#REMOTE_ARCHIVE_PATH=//xxx/Packaged-Build/${PROJECT_NAME}/${BUILD_PLATFORM}/${GIT_BRANCH}/${GIT_REV_COUNT}/${BUILD_CONFIG}/
+#mkdir -p ${REMOTE_ARCHIVE_PATH}
+
+#pushd ${ARCHIVE_DIR}
+#tar cvf ${REMOTE_ARCHIVE_PATH}/${GIT_REV_COUNT}_${BUILD_PLATFORM}_${BUILD_CONFIG}.tar .
+#popd #pushd ${ARCHIVE_DIR}
 
 popd #pushd ${PROJECT_ROOT}
