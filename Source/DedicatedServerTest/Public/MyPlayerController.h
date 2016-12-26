@@ -5,6 +5,7 @@
 #include "GameFramework/PlayerController.h"
 
 #include "Interfaces/OnlineSessionInterface.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "MyPlayerController.generated.h"
 
 
@@ -20,12 +21,20 @@ class DEDICATEDSERVERTEST_API AMyPlayerController : public APlayerController
 public:
 	AMyPlayerController();
 	virtual void BeginPlay() override;
-	
+
+
+
+public:
+	UFUNCTION()
+	virtual void OnFindSessionsComplete(bool bSuccess);
+
+	//UFUNCTION()
+	virtual void OnJoinSessionsComplete(FName sessionName, EOnJoinSessionCompleteResult::Type eSessionType);
 private:
 	// The delegate executed by the online subsystem
-	FOnFindSessionsCompleteDelegate Delegate;
-
-	// Handle to the registered OnFindSessionsComplete delegate
-	FDelegateHandle DelegateHandle;
+	FOnFindSessionsCompleteDelegate FindSessionCompeteDelegate;
 	TSharedRef<FOnlineSessionSearch> SearchSettings;
+
+
+	FOnJoinSessionCompleteDelegate JoinSessionCompleteDelegate;
 };

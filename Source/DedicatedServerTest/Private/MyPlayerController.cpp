@@ -10,15 +10,13 @@ AMyPlayerController::AMyPlayerController()
 	SearchSettings->bIsLanQuery = false;
 	if (GEngine->GetNetMode(GetWorld()) != NM_DedicatedServer)
 	{
-		Delegate.BindLambda([this](bool bSuccess)
+		FindSessionCompeteDelegate.BindUObject(this, &AMyPlayerController::OnFindSessionsComplete);
+		JoinSessionCompleteDelegate.BindLambda([this](FName sessionName,
+			EOnJoinSessionCompleteResult::Type eSessionType) 
 		{
-			UE_LOG(LogTemp, Log, TEXT("OnFindSessionCompleteDelegate: %d"), bSuccess);
-			IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
-			int numSessions = SessionInt->GetNumSessions();
-			UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), numSessions);
-			FOnlineSessionSearchResult result;
-			SessionInt->JoinSession(0, "TestRoom", result);
+			OnJoinSessionsComplete(sessionName, eSessionType);
 		});
+			//(this, &AMyPlayerController::OnJoinSessionsComplete);
 	}
 
 }
@@ -30,19 +28,35 @@ void AMyPlayerController::BeginPlay()
 	if (GEngine->GetNetMode(GetWorld()) != NM_DedicatedServer)
 	{
 		IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
-		//FOnlineSessionSettings settings;
-		//settings.bIsLANMatch = false;
-		//settings.bIsDedicated = false;
-		//FName testRoom = "TestRoom2";
-		//
-		//SessionInt->CreateSession(0, testRoom, settings);
-
-
-		//SearchSettings->SearchState = EOnlineAsyncTaskType
-
-		/*DelegateHandle = SessionInt->AddOnFindSessionsCompleteDelegate_Handle(Delegate);
+		SessionInt->AddOnFindSessionsCompleteDelegate_Handle(FindSessionCompeteDelegate);
+		SessionInt->AddOnJoinSessionCompleteDelegate_Handle(JoinSessionCompleteDelegate);
 		bool b = SessionInt->FindSessions(0, SearchSettings);
 		int numSessions = SessionInt->GetNumSessions();
-		UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), numSessions);*/
+		UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), numSessions);
 	}
+	//EOnJoinSessionCompleteResult::Type eSessionType;
+	//UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), (int)eSessionType);
+
+}
+
+
+
+void AMyPlayerController::OnFindSessionsComplete(bool bSuccess)
+{
+	UE_LOG(LogTemp, Log, TEXT("OnFindSessionCompleteDelegate: %d"), bSuccess);
+	IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
+	int numSessions = SessionInt->GetNumSessions();
+	UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), numSessions);
+	if (SearchSettings->SearchResults.Num() > 0) {
+		FOnlineSessionSearchResult result;
+		result.Session = SearchSettings->SearchResults[0].Session;
+		//SearchSettings->SearchResults[0].GetSessionIdStr();
+		SessionInt->JoinSession(0, "Game", result);
+	}
+}
+
+void AMyPlayerController::OnJoinSessionsComplete(FName sessionName,
+	EOnJoinSessionCompleteResult::Type eSessionType)
+{
+	UE_LOG(LogTemp, Log, TEXT("OnJoinSessionsComplete: %s, result: %d"), *FString(sessionName.ToString()), (int)eSessionType);
 }

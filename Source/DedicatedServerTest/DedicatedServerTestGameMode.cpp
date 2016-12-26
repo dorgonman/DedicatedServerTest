@@ -14,8 +14,16 @@ ADedicatedServerTestGameMode::ADedicatedServerTestGameMode()
 void ADedicatedServerTestGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GameSession->RegisterServer();
+	//if (GetNetMode() != NM_Standalone)
+	//{
+	//	// Attempt to login, returning true means an async login is in flight
+	//	if (!UOnlineEngineInterface::Get()->DoesSessionExist(GetWorld(), GameSession->SessionName) &&
+	//		!GameSession->ProcessAutoLogin())
+	//	{
+	//		GameSession->RegisterServer();
+	//	}
+	//}
+	//GameSession->RegisterServer();
 
 }
 
@@ -77,4 +85,10 @@ void ADedicatedServerTestGameMode::PostLogin(APlayerController* NewPlayer)
 		
 		PlayerControllerList.Add(NewPlayer);
 	}
+}
+
+
+TSubclassOf<AGameSession> ADedicatedServerTestGameMode::GetGameSessionClass() const
+{
+	return GameSessionClass;
 }
