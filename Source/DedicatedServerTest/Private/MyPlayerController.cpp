@@ -19,6 +19,10 @@ AMyPlayerController::AMyPlayerController()
 			//(this, &AMyPlayerController::OnJoinSessionsComplete);
 	}
 
+	bShowMouseCursor = true;
+	bEnableClickEvents = true;
+	bEnableMouseOverEvents = true;
+
 }
 
 
