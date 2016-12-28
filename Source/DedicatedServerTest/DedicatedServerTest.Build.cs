@@ -14,7 +14,8 @@ public class DedicatedServerTest : ModuleRules
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "UMG", "Paper2D" }); //2D
 
         PublicDependencyModuleNames.AddRange(new string[] { "Voice", "OnlineSubsystem", "OnlineSubsystemUtils" });
-        DynamicallyLoadedModuleNames.Add("OnlineSubsystemNull");
+        //DynamicallyLoadedModuleNames.Add("OnlineSubsystemNull");
+        DynamicallyLoadedModuleNames.Add("OnlineSubsystemHorizon");
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 

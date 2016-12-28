@@ -5,6 +5,11 @@
 
 #include "AudioDeviceManager.h"
 
+
+//https://madebykrol.wordpress.com/2015/05/21/unreal-engine-and-online-multiplayer/
+
+
+
 AMyPlayerController::AMyPlayerController() 
 	:SearchSettings(new FOnlineSessionSearch())
 {
@@ -80,7 +85,7 @@ void AMyPlayerController::OnJoinSessionsComplete(FName sessionName,
 	EOnJoinSessionCompleteResult::Type eSessionType)
 {
 	UE_LOG(LogTemp, Log, TEXT("OnJoinSessionsComplete: %s, result: %d"), *FString(sessionName.ToString()), (int)eSessionType);
-	//IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
+	IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
 	//SessionInt->JoinSession(0, GameSessionName, SearchSettings->SearchResults[0]); 
 	//IOnlineVoicePtr VoiceInterface = Online::GetVoiceInterface();
 	//if (VoiceInterface.IsValid()) {
@@ -88,6 +93,15 @@ void AMyPlayerController::OnJoinSessionsComplete(FName sessionName,
 	//	VoiceInterface->RegisterLocalTalker(0);
 	//	VoiceInterface->StartNetworkedVoice(0);
 	//}
+
+	FString URL;
+	//IOnlineSessionPtr Session = OnlineSub->GetSessionInterface();
+
+	if (SessionInt->GetResolvedConnectString(sessionName, URL))
+	{
+		ClientTravel(URL, TRAVEL_Absolute);
+	}
+
 	FAudioDeviceManager* DeviceManager = GEngine->GetAudioDeviceManager();
 
 	if (DeviceManager && !DeviceManager->IsPlayAllDeviceAudio())
