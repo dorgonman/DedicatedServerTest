@@ -42,7 +42,18 @@ void AMyPlayerController::BeginPlay()
 	}
 	//EOnJoinSessionCompleteResult::Type eSessionType;
 	//UE_LOG(LogTemp, Log, TEXT("numSessions: %d"), (int)eSessionType);
+	/*IOnlineVoicePtr VoiceInterface = Online::GetVoiceInterface();
+	if (VoiceInterface.IsValid()) {
+		VoiceInterface->RegisterLocalTalker(0);
+		VoiceInterface->StopNetworkedVoice(0);
+		VoiceInterface->StartNetworkedVoice(0);
+	}
+	FAudioDeviceManager* DeviceManager = GEngine->GetAudioDeviceManager();
 
+	if (DeviceManager && !DeviceManager->IsPlayAllDeviceAudio())
+	{
+		DeviceManager->TogglePlayAllDeviceAudio();
+	}*/
 }
 
 
@@ -70,13 +81,13 @@ void AMyPlayerController::OnJoinSessionsComplete(FName sessionName,
 {
 	UE_LOG(LogTemp, Log, TEXT("OnJoinSessionsComplete: %s, result: %d"), *FString(sessionName.ToString()), (int)eSessionType);
 	//IOnlineSessionPtr SessionInt = Online::GetSessionInterface(GetWorld());
-	//SessionInt->JoinSession(0, GameSessionName, SearchSettings->SearchResults[0]);
-	/*IOnlineVoicePtr VoiceInterface = Online::GetVoiceInterface();
-	if (VoiceInterface.IsValid()) {
-		VoiceInterface->RegisterLocalTalker(0);
-		VoiceInterface->StopNetworkedVoice(0);
-		VoiceInterface->StartNetworkedVoice(0);
-	}*/
+	//SessionInt->JoinSession(0, GameSessionName, SearchSettings->SearchResults[0]); 
+	//IOnlineVoicePtr VoiceInterface = Online::GetVoiceInterface();
+	//if (VoiceInterface.IsValid()) {
+	//	VoiceInterface->StopNetworkedVoice(0);
+	//	VoiceInterface->RegisterLocalTalker(0);
+	//	VoiceInterface->StartNetworkedVoice(0);
+	//}
 	FAudioDeviceManager* DeviceManager = GEngine->GetAudioDeviceManager();
 
 	if (DeviceManager && !DeviceManager->IsPlayAllDeviceAudio())

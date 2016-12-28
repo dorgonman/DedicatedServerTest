@@ -1,3 +1,6 @@
 [submodule "ci_scripts/function/python/HorizonBuildTool"]
 	path = ci_scripts/function/python/HorizonBuildTool
 	url = https://github.com/dorgonman/HorizonBuildTool.git
+[submodule "Plugins/OnlineSubsystemHorizon"]
+	path = Plugins/OnlineSubsystemHorizon
+	url = git@bitbucket.org:horizonstudio/onlinesubsystemhorizon.git
