@@ -10,6 +10,9 @@
 
 
 //https://wiki.unrealengine.com/Using_Steamworks_with_UE4
+
+
+//https://answers.unrealengine.com/questions/323185/modules-custom-onlinesubsystem-any-docs-or-tutoria.html
 void AMyGameSession::RegisterServer()
 {
 	Super::RegisterServer();
