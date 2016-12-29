@@ -4,14 +4,14 @@
 #include "BattleGameModeBase.h"
 
 
-
-
-
+//DedicatedServerTestServer.exe Title -log
+//DedicatedServerTestServer.exe Home -log
+//DedicatedServerTestServer.exe Battle -log
 ABattleGameModeBase::ABattleGameModeBase()
 {
 
 #if !UE_EDITOR
-	bUseAuthentication = true;
+	//bUseAuthentication = true;
 #endif
 }
 
@@ -27,7 +27,11 @@ void ABattleGameModeBase::BeginPlay()
 	//		GameSession->RegisterServer();
 	//	}
 	//}
-	//GameSession->RegisterServer();
+	//if (GetNetMode() != NM_DedicatedServer)
+	{
+		GameSession->RegisterServer();
+
+	}
 
 }
 
@@ -95,4 +99,14 @@ void ABattleGameModeBase::PostLogin(APlayerController* NewPlayer)
 TSubclassOf<AGameSession> ABattleGameModeBase::GetGameSessionClass() const
 {
 	return GameSessionClass;
+	/*Super::GetGameSessionClass();
+	if (GameSessionClass) {
+		return GameSessionClass;
+	}
+	else {
+		return AGameSession::StaticClass();;
+	}
+*/
+	//return GetGameSessionClass ? GameSessionClass : AGameSession::StaticClass();
+	//return GameSessionClass;
 }

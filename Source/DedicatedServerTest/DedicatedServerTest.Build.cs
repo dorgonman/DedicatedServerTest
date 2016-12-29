@@ -14,6 +14,9 @@ public class DedicatedServerTest : ModuleRules
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore", "UMG", "Paper2D" }); //2D
 
         PublicDependencyModuleNames.AddRange(new string[] { "Voice", "OnlineSubsystem", "OnlineSubsystemUtils" });
+
+
+        PrivateDependencyModuleNames.AddRange(new string[] { "EngineSettings" });
         //DynamicallyLoadedModuleNames.Add("OnlineSubsystemNull");
         DynamicallyLoadedModuleNames.Add("OnlineSubsystemHorizon");
         DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");

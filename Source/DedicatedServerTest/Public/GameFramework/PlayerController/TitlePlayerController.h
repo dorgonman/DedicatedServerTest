@@ -19,17 +19,5 @@ public:
 
 
 
-public:
-	UFUNCTION()
-		virtual void OnFindSessionsComplete(bool bSuccess);
 
-	//UFUNCTION()
-	virtual void OnJoinSessionsComplete(FName sessionName, EOnJoinSessionCompleteResult::Type eSessionType);
-private:
-	// The delegate executed by the online subsystem
-	FOnFindSessionsCompleteDelegate FindSessionCompeteDelegate;
-	TSharedRef<FOnlineSessionSearch> SearchSettings;
-	FOnJoinSessionCompleteDelegate JoinSessionCompleteDelegate;
-	
-	
 };
