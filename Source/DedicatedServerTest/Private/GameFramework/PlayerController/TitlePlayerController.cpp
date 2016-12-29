@@ -9,6 +9,13 @@
 
 
 
+
+//check void FOnlineSubsystemModule::LoadDefaultSubsystem(), it will try to get OnlineSubsystem section in DefaultEngine.ini: 
+// DefaultPlatformService=Horizon
+// DefaultPlatformService_Windows = Steam
+// Try to get DefaultPlatformService_Windows, if not then get DefaultPlatformService
+
+
 ATitlePlayerController::ATitlePlayerController()
 	:SearchSettings(new FOnlineSessionSearch())
 {
