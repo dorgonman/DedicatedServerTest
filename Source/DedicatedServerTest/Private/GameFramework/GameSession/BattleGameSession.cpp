@@ -58,7 +58,7 @@ void ABattleGameSession::RegisterServer()
 			{
 				//	Settings.QuerySettings.Set(SEARCH_PRESENCE, bIsPresence, EOnlineComparisonOp::Equals);
 			}
-			Sessions->CreateSession(-1, GameSessionName, Settings);
+			Sessions->CreateSession(0, GameSessionName, Settings);
 			//Sessions->StartSession(GameSessionName);
 			//Sessions->GameServerName = FString("My Server!");
 		}
