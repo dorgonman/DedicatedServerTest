@@ -16,6 +16,9 @@ public class DedicatedServerTest : ModuleRules
         PublicDependencyModuleNames.AddRange(new string[] { "Voice", "OnlineSubsystem", "OnlineSubsystemUtils" });
         //DynamicallyLoadedModuleNames.Add("OnlineSubsystemNull");
         DynamicallyLoadedModuleNames.Add("OnlineSubsystemHorizon");
+        DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
+        //DynamicallyLoadedModuleNames.Add("OnlineSubsystemGooglePlay");
+       // DynamicallyLoadedModuleNames.Add("OnlineSubsystemIOS");
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
