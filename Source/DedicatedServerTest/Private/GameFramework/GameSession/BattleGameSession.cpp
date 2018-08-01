@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-#include "DedicatedServerTest.h"
 #include "BattleGameSession.h"
+#include "DedicatedServerTest.h"
+
 
 //https://forums.unrealengine.com/showthread.php?97479-Dedicated-server-with-Steam-is-a-joke
 //open steam.ServerSteamID(long number):PORT

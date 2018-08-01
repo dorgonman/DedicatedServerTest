@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-#include "DedicatedServerTest.h"
 #include "TitleGameModeBase.h"
+#include "DedicatedServerTest.h"
+
 
 
 void  ATitleGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)

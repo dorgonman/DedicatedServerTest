@@ -24,7 +24,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* inputComponent) override;
 
 
-	UFUNCTION(BlueprintCallable, Category = "Pawn|Input", meta = (Keywords = "AddInput"))
 		virtual void AddMovementInput(FVector WorldDirection, float ScaleValue = 1.0f, bool bForce = false) override;
 
 

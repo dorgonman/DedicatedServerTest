@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#include "TitlePlayerController.h"
 
 #include "DedicatedServerTest.h"
-#include "TitlePlayerController.h"
 
 
 
