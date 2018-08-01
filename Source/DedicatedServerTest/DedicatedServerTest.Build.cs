@@ -4,8 +4,10 @@ using UnrealBuildTool;
 
 public class DedicatedServerTest : ModuleRules
 {
-	public DedicatedServerTest(TargetInfo Target)
-	{
+    public DedicatedServerTest(ReadOnlyTargetRules Target)
+        : base(Target)
+    {
+        PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
 		PublicDependencyModuleNames.AddRange(new string[] {  });

@@ -6,7 +6,7 @@ using System.Collections.Generic;
  [SupportedPlatforms(UnrealPlatformClass.Server)]
 public class DedicatedServerTestServerTarget : TargetRules
 {
-    public DedicatedServerTestServerTarget(TargetInfo Target)
+    public DedicatedServerTestServerTarget(TargetInfo Target) : base(Target)
     {
         Type = TargetType.Server;
         ExtraModuleNames.Add("DedicatedServerTest");
