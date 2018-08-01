@@ -2,31 +2,20 @@
  
 using UnrealBuildTool;
 using System.Collections.Generic;
- 
+
+ [SupportedPlatforms(UnrealPlatformClass.Server)]
 public class DedicatedServerTestServerTarget : TargetRules
 {
     public DedicatedServerTestServerTarget(TargetInfo Target)
     {
         Type = TargetType.Server;
+        ExtraModuleNames.Add("DedicatedServerTest");
     }
  
-    //
-    // TargetRules interface.
-    //
-    public override void SetupBinaries(
-        TargetInfo Target,
-        ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
-        ref List<string> OutExtraModuleNames
-        )
-    {
-        base.SetupBinaries(Target, ref OutBuildBinaryConfigurations, ref OutExtraModuleNames);
-        OutExtraModuleNames.Add("DedicatedServerTest");
-    }
- 
-    public override bool GetSupportedPlatforms(ref List<UnrealTargetPlatform> OutPlatforms)
+    /*public override bool GetSupportedPlatforms(ref List<UnrealTargetPlatform> OutPlatforms)
     {
         // It is valid for only server platforms
         return UnrealBuildTool.UnrealBuildTool.GetAllServerPlatforms(ref OutPlatforms, false);
-    }
+    }*/
 
 }
