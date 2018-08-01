@@ -3,4 +3,4 @@
 	url = https://github.com/dorgonman/HorizonBuildTool.git
 [submodule "Plugins/OnlineSubsystemHorizon"]
 	path = Plugins/OnlineSubsystemHorizon
-	url = https://horizon-studio.visualstudio.com/DefaultCollection/HorizonPlugin/_git/OnlineSubsystemHorizon
+	url = https://hsgame.visualstudio.com/UE4HorizonPlugin/_git/OnlineSubsystemHorizon
