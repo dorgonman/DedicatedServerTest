@@ -20,17 +20,6 @@ public:
 	virtual bool GetSessionJoinability(FName InSessionName, FJoinabilitySettings& OutSettings) override;
 
 
-	/**
-	* Travel to a session URL (as client) for a given session
-	*
-	* @param ControllerId controller initiating the session travel
-	* @param SessionName name of session to travel to
-	*
-	* @return true if successful, false otherwise
-	*/
-	virtual bool TravelToSession(int32 ControllerId, FName InSessionName) override;
-
-
 	virtual FString ApproveLogin(const FString& Options) override;
 	
 	

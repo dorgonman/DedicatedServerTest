@@ -20,7 +20,6 @@ public class DedicatedServerTest : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(new string[] { "EngineSettings" });
         //DynamicallyLoadedModuleNames.Add("OnlineSubsystemNull");
-        DynamicallyLoadedModuleNames.Add("OnlineSubsystemHorizon");
         DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
         //DynamicallyLoadedModuleNames.Add("OnlineSubsystemGooglePlay");
        // DynamicallyLoadedModuleNames.Add("OnlineSubsystemIOS");

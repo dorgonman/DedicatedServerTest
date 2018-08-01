@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Engine/GameInstance.h"
+#include "Interfaces/OnlineSessionInterface.h"
+#include "OnlineSessionSettings.h"
 #include "MyGameInstance.generated.h"
 
 /**

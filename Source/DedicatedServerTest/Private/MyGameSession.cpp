@@ -61,11 +61,7 @@ bool AMyGameSession::GetSessionJoinability(FName InSessionName, FJoinabilitySett
 
 }
 
-bool AMyGameSession::TravelToSession(int32 ControllerId, FName InSessionName)
-{
-	return Super::TravelToSession(ControllerId, InSessionName);
 
-}
 
 FString AMyGameSession::ApproveLogin(const FString& Options)
 {
